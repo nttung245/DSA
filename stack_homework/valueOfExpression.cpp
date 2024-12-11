@@ -6,13 +6,13 @@ int precedence(char op)
 {
     if (op == '+' || op == '-')
         return 1;
-    if (op == '*' || op == '/')
+    if (op == '*' || op == ':')
         return 2;
     return 0;
 }
 
 // Function to perform arithmetic operations.
-int applyOp(int a, int b, char op)
+double applyOp(double a, double b, char op)
 {
     switch (op)
     {
@@ -22,16 +22,16 @@ int applyOp(int a, int b, char op)
         return a - b;
     case '*':
         return a * b;
-    case '/':
+    case ':':
         return a / b;
     }
     return 0;
 }
 
 // Function that returns value of expression after evaluation.
-int evaluate(string tokens)
+double evaluate(string tokens)
 {
-    stack<long> values;
+    stack<double> values;
     stack<char> ops;
 
     for (long i = 0; i < tokens.length(); i++)
@@ -48,7 +48,7 @@ int evaluate(string tokens)
         // Handle numbers
         else if (isdigit(tokens[i]))
         {
-            long val = 0;
+            double val = 0;
             while (i < tokens.length() && isdigit(tokens[i]))
             {
                 val = (val * 10) + (tokens[i] - '0');
@@ -62,9 +62,9 @@ int evaluate(string tokens)
         {
             while (!ops.empty() && (ops.top() != '('))
             {
-                long val2 = values.top();
+                double val2 = values.top();
                 values.pop();
-                long val1 = values.top();
+                double val1 = values.top();
                 values.pop();
                 char op = ops.top();
                 ops.pop();
@@ -77,14 +77,13 @@ int evaluate(string tokens)
                 ops.pop();
         }
         // Handle operators
-        // Haven't fix yet
-        else if (strchr("+-*/", tokens[i]))
+        else if (strchr("+-*:", tokens[i]))
         {
             while (!ops.empty() && precedence(ops.top()) >= precedence(tokens[i]))
             {
-                long val2 = values.top();
+                double val2 = values.top();
                 values.pop();
-                long val1 = values.top();
+                double val1 = values.top();
                 values.pop();
                 char op = ops.top();
                 ops.pop();
@@ -97,9 +96,9 @@ int evaluate(string tokens)
     // Apply remaining operations
     while (!ops.empty())
     {
-        long val2 = values.top();
+        double val2 = values.top();
         values.pop();
-        long val1 = values.top();
+        double val1 = values.top();
         values.pop();
         char op = ops.top();
         ops.pop();
