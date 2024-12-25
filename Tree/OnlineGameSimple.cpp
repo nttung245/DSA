@@ -53,55 +53,55 @@ public:
         return false;
     }
 
-    void DiTimNodeTheMang(Node *&X, Node *&Y)
-    {
-        if (Y->left != NULL)
-        {
-            DiTimNodeTheMang(X, Y->left);
-        }
-        else
-        {
-            X->data = Y->data;
-            X = Y;
-            Y = Y->right;
-        }
-    }
+    // void DiTimNodeTheMang(Node *&X, Node *&Y)
+    // {
+    //     if (Y->left != NULL)
+    //     {
+    //         DiTimNodeTheMang(X, Y->left);
+    //     }
+    //     else
+    //     {
+    //         X->data = Y->data;
+    //         X = Y;
+    //         Y = Y->right;
+    //     }
+    // }
 
-    void XoaNode(Node *&t, long data)
-    {
-        if (t == NULL)
-        {
-            return;
-        }
-        else
-        {
-            if (data < t->data)
-            {
-                XoaNode(t->left, data);
-            }
-            else if (data > t->data)
-            {
-                XoaNode(t->right, data);
-            }
-            else
-            {
-                Node *X = t; // Node X la node the mang
-                if (t->left == NULL)
-                {
-                    t = t->right;
-                }
-                else if (t->right == NULL)
-                {
-                    t = t->left;
-                }
-                else
-                {
-                    DiTimNodeTheMang(X, t->right); // Tim node con trai nhat cua nhanh ben phai
-                }
-                delete X;
-            }
-        }
-    }
+    // void XoaNode(Node *&t, long data)
+    // {
+    //     if (t == NULL)
+    //     {
+    //         return;
+    //     }
+    //     else
+    //     {
+    //         if (data < t->data)
+    //         {
+    //             XoaNode(t->left, data);
+    //         }
+    //         else if (data > t->data)
+    //         {
+    //             XoaNode(t->right, data);
+    //         }
+    //         else
+    //         {
+    //             Node *X = t; // Node X la node the mang
+    //             if (t->left == NULL)
+    //             {
+    //                 t = t->right;
+    //             }
+    //             else if (t->right == NULL)
+    //             {
+    //                 t = t->left;
+    //             }
+    //             else
+    //             {
+    //                 DiTimNodeTheMang(X, t->right); // Tim node con trai nhat cua nhanh ben phai
+    //             }
+    //             delete X;
+    //         }
+    //     }
+    // }
 
 }; // End of Solution
 int main()
@@ -126,10 +126,10 @@ int main()
         {
             cout << myTree.search(root, data) << '\n';
         }
-        else if (t == 3)
-        {
-            myTree.XoaNode(root, data);
-        }
+        // else if (t == 3)
+        // {
+        //     myTree.XoaNode(root, data);
+        // }
     }
 
     return 0;
