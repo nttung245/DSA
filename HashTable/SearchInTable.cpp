@@ -55,6 +55,9 @@ void Input(Hocsinh &x)
 }
 int main()
 {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     Hashtable hashtable;
 
     int m, n, k;
