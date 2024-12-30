@@ -1,72 +1,86 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+struct data1
+{
+    long long height;
+    int check_behind;
+    long the_same;
+} typedef data;
+
+data1 info(long long h, int behind, long same)
+{
+    data1 tmp;
+    tmp.height = h;
+    tmp.check_behind = behind;
+    tmp.the_same = same;
+    return tmp;
+}
+
 int main()
 {
-    cin.tie(NULL);
-    std::ios_base::sync_with_stdio(false);
+    stack<data1> S;
 
-    long long n;
+    long n;
     cin >> n;
-    long long count_pairs = 0;
-    long long same = 0;
-    stack<int> XepHang;
-    for (int i = 0; i < n; i++)
+    long count = 0;
+    for (long i = 1; i <= n; i++)
     {
-        long long x;
-        cin >> x;
-        if (XepHang.empty())
+        long long h;
+        cin >> h;
+        data1 TOP;
+        if (!S.empty())
+            TOP = S.top();
+        if (S.empty())
         {
-            XepHang.push(x);
-            continue;
+            S.push(info(h, 0, 0));
         }
-        else
+        else if (!S.empty() && TOP.height > h)
         {
-            if (x > XepHang.top())
+            S.push(info(h, 1, 0));
+            count++;
+        }
+        else if (!S.empty() && TOP.height == h)
+        {
+            count++;
+            count += TOP.the_same;
+            if (TOP.check_behind == 1)
             {
-                // same = 0;
-                while (!XepHang.empty())
-                {
-                    count_pairs++;
-                    XepHang.pop();
-                    if (!XepHang.empty() && x < XepHang.top())
-                    {
-                        count_pairs++;
-                        break;
-                    }
-                    else if (!XepHang.empty() && x == XepHang.top() && XepHang.size() + 1 > 2)
-                    {
-                        same++;
-                        count_pairs++;
-                        count_pairs += same;
-                        break;
-                    }
-                    else if (!XepHang.empty() && x == XepHang.top() && XepHang.size() + 1 <= 2)
-                    {
-                        count_pairs++;
-                        break;
-                    }
-                    else
-                    {
-                        same = 0;
-                    }
-                }
-                XepHang.push(x);
+                count++;
             }
-            else if (x == XepHang.top() && XepHang.size() + 1 > 2)
+            S.push(info(h, TOP.check_behind, TOP.the_same + 1));
+        }
+        else if (!S.empty() && TOP.height < h)
+        {
+            while (TOP.height < h)
             {
-                same++;
-                count_pairs++;
-                count_pairs += same;
-                XepHang.push(x);
+                count++;
+                S.pop();
+                if (S.empty())
+                    break;
+                TOP = S.top();
+            }
+            if (!S.empty())
+                TOP = S.top();
+            if (!S.empty() && TOP.height == h)
+            {
+                count++;
+                count += TOP.the_same;
+                if (TOP.check_behind == 1)
+                {
+                    count++;
+                }
+                S.push(info(h, TOP.check_behind, TOP.the_same + 1));
+            }
+            else if (!S.empty() && TOP.height > h)
+            {
+                count++;
+                S.push(info(h, 1, 0));
             }
             else
-            {
-                XepHang.push(x);
-                count_pairs++;
-            }
+                S.push(info(h, 0, 0));
         }
     }
-    cout << count_pairs;
+    cout << count;
     return 0;
 }
