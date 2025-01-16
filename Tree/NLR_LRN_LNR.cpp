@@ -88,6 +88,37 @@ public:
             inOrder(root->right);
         }
     }
+    void RNL(Node *root)
+    {
+        if (root != NULL)
+        {
+            RNL(root->right);
+            cout << root->data << " ";
+            RNL(root->left);
+        }
+    }
+
+    void NRL(Node *root)
+    {
+        if (root != NULL)
+        {
+            cout << root->data << " ";
+            NRL(root->right);
+            NRL(root->left);
+        }
+    }
+
+    int DemNode2con(Node *root)
+    {
+        if (root != NULL)
+        {
+            if (root->left != NULL && root->right != NULL)
+            {
+                return 1 + DemNode2con(root->left) + DemNode2con(root->right);
+            }
+        }
+        return 0;
+    }
 
 }; // End of Solution
 int main()
@@ -107,7 +138,7 @@ int main()
         root = myTree.insert(root, data);
     }
 
-    myTree.postOrder(root);
+    cout << myTree.DemNode2con(root);
 
     return 0;
 }
